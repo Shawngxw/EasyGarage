@@ -2,8 +2,6 @@
 ```sh
 # install front dependencies
 yarn 
-# intsall bakend dependencies
-cd bakend && yarn 
 ```
 
 # Run Project
