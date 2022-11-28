@@ -1,0 +1,78 @@
+{
+  "parking_zones": [
+    {
+      "parking_zone_id": "z0001",
+      "parking_zone_title": "zone1",
+      "parking_spaces": [
+        {
+          "parking_space_id": "s0001",
+          "parking_space_title": "A01",
+          "vehicle_parking_id": "v0001",
+          "parking_space_reservation": false,
+          "user_id": "u0001"
+        },
+        {
+          "parking_space_id": "s0002",
+          "parking_space_title": "A02",
+          "vehicle_parking_id": "v0002",
+          "parking_space_reservation": false,
+          "user_id": "u0001"
+        },
+        {
+          "parking_space_id": "s0003",
+          "parking_space_title": "A03",
+          "vehicle_parking_id": "v0003",
+          "parking_space_reservation": true,
+          "user_id": "u0001"
+        },
+        {
+          "parking_space_id": "s0004",
+          "parking_space_title": "A04",
+          "vehicle_parking_id": "",
+          "parking_space_reservation": false,
+          "user_id": ""
+        },
+        {
+          "parking_space_id": "s0005",
+          "parking_space_title": "A05",
+          "vehicle_parking_id": "",
+          "user_id": ""
+        },
+        {
+          "parking_space_id": "s0006",
+          "parking_space_title": "A06",
+          "vehicle_parking_id": "",
+          "parking_space_reservation": false,
+          "user_id": ""
+        }
+      ]
+    },
+    {
+      "parking_zone_id": "z0002",
+      "parking_zone_title": "zone2",
+      "parking_spaces": [
+        {
+          "parking_space_id": "s0001",
+          "parking_space_title": "A01",
+          "vehicle_parking_id": "",
+          "parking_space_reservation": false,
+          "user_id": ""
+        },
+        {
+          "parking_space_id": "s0002",
+          "parking_space_title": "A02",
+          "vehicle_parking_id": "",
+          "parking_space_reservation": false,
+          "user_id": ""
+        },
+        {
+          "parking_space_id": "s0003",
+          "parking_space_title": "A03",
+          "vehicle_parking_id": "",
+          "parking_space_reservation": false,
+          "user_id": ""
+        }
+      ]
+    }
+  ]
+}

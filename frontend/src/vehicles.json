@@ -1,0 +1,29 @@
+{
+  "user_id": "u0001",
+  "vehicles": [
+    {
+      "vehicle_parking_id": "v0001",
+      "parking_zone_id": "z0001",
+      "parking_space_id": "s0001",
+      "booking_date_time": "2022-11-25T11:19:30.574Z",
+      "release_date_time": "",
+      "reserve_date_time": ""
+    },
+    {
+      "vehicle_parking_id": "v0002",
+      "parking_zone_id": "z0001",
+      "parking_space_id": "s0002",
+      "booking_date_time": "2022-11-23T18:12:30.500Z",
+      "release_date_time": "",
+      "reserve_date_time": ""
+    },
+    {
+      "vehicle_parking_id": "v0003",
+      "parking_zone_id": "z0002",
+      "parking_space_id": "s0001",
+      "booking_date_time": "",
+      "release_date_time": "",
+      "reserve_date_time": "2022-11-23T18:12:30.500Z"
+    }
+  ]
+}
