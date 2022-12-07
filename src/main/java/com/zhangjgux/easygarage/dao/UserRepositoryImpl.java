@@ -67,8 +67,7 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public void deleteById(int id) {
-        TypedQuery<User> theQuery =
-                entityManager.createQuery("DELETE FROM User u WHERE u.id = " + id, User.class);
-        theQuery.executeUpdate();
+        User user = findById(id);
+        if (user != null) entityManager.remove(user);
     }
 }
