@@ -2,6 +2,7 @@ package com.zhangjgux.easygarage.dao;
 
 import com.zhangjgux.easygarage.entity.Parking;
 import com.zhangjgux.easygarage.entity.Place;
+import com.zhangjgux.easygarage.entity.Reservation;
 import com.zhangjgux.easygarage.entity.Vehicle;
 import com.zhangjgux.easygarage.service.PlaceService;
 import com.zhangjgux.easygarage.service.UserService;
@@ -66,6 +67,28 @@ public class ParkingRepositoryImpl implements ParkingRepository {
             if (TimeUtils.timeEqual(begin, tp)) return pk;
         }
         return null;
+    }
+
+    @Override
+    public Parking findReservationById(int id) {
+        TypedQuery<Reservation> theQuery =
+                entityManager.createQuery("SELECT r FROM Reservation r WHERE r.id = :id AND r.userID = :userID", Reservation.class);
+        theQuery.setParameter("id", id);
+        theQuery.setParameter("userID", userService.getCurrent());
+        try {
+            Reservation r = theQuery.getSingleResult();
+            TypedQuery<Parking> theQuery2 =
+                    entityManager.createQuery("SELECT p FROM Parking p WHERE p.userID = :userID AND p.reservationID = :reservationID", Parking.class);
+            theQuery2.setParameter("reservationID", r);
+            theQuery2.setParameter("userID", userService.getCurrent());
+            try {
+                return theQuery2.getSingleResult();
+            } catch (NoResultException e2) {
+                return null;
+            }
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override

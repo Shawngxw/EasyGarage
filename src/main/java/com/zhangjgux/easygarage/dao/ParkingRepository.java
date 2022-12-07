@@ -15,6 +15,8 @@ public interface ParkingRepository {
 
     public Parking findByTime(Timestamp begin);
 
+    public Parking findReservationById(int id);
+
     public void save(Map<String, Object> body);
 
     public void deleteById(int id);
