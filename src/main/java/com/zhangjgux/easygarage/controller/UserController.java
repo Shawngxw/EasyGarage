@@ -40,7 +40,8 @@ public class UserController {
     @PutMapping("/me")
     public User updateUser(@RequestBody Map<String, Object> body) {
         User theUser = userService.getUserByEmail((String) body.get("original_email"));
-        if (theUser == null || userService.getUserByEmail((String) body.get("new_email")) != null) return null;
+        if (theUser == null || (userService.getUserByEmail((String) body.get("new_email")) != null
+                && !((String) body.get("new_email")).equals((String) body.get("original_email")))) return null;
         theUser.setEmail((String) body.get("new_email"));
         theUser.setName((String) body.get("name"));
         theUser.setPassword(new BCryptPasswordEncoder().encode((String) body.get("password")));
@@ -49,7 +50,7 @@ public class UserController {
         return theUser;
     }
 
-    @DeleteMapping("users/{userId}")
+    @DeleteMapping("users/{userID}")
     public String deleteUser(@PathVariable int userID) {
         User user = userService.findById(userID);
         if (user == null) throw new RuntimeException("User not found");

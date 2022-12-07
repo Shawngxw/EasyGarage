@@ -109,6 +109,7 @@ public class ParkingRepositoryImpl implements ParkingRepository {
             entityManager.merge(place);
         } else {
             Parking p = findByTime(TimeUtils.timeToTimestamp((String) body.get("begin")));
+            if (p == null) return;
             p.getPlaceID().setStatus(1);
             p.setStatus(2);
             p.setEnd(new Timestamp(System.currentTimeMillis()));

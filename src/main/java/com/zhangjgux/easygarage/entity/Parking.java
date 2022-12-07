@@ -39,7 +39,6 @@ public class Parking {
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicleID;
 
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "reservation_id")
     private Reservation reservationID;
