@@ -3,10 +3,9 @@ module.exports = function (app) {
     app.use(
         "/api",
         createProxyMiddleware({
-            target: "http://localhost:3500",
+            target: "http://ec2-3-92-225-56.compute-1.amazonaws.com:8088",
             changeOrigin: true,
-            pathRewrite: {'^/api': ''}
-
+            pathRewrite: {'^/api': '/api'}
         })
     )
 

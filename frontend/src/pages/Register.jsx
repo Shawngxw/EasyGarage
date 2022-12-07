@@ -46,7 +46,7 @@ const Register = () => {
 	const onFinish = async (values) => {
 		try {
 			const data = await register({...values})
-			message.success(data.success)
+			message.success("register successful!")
 			navigate("/login")
 		} catch (err) {
 			if (!err?.originalStatus) {
@@ -159,7 +159,7 @@ const Register = () => {
 						<Button type="primary" htmlType="submit">
 							Register
 						</Button>
-						Or <a href="#/login">login now!</a>
+						Or <a href="/login">login now!</a>
 					</Form.Item>
 				</Form>
 			</Card>
