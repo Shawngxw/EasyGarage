@@ -3,7 +3,6 @@ package com.zhangjgux.easygarage.dao;
 import com.zhangjgux.easygarage.entity.Parking;
 import com.zhangjgux.easygarage.entity.Place;
 import com.zhangjgux.easygarage.entity.Reservation;
-import com.zhangjgux.easygarage.entity.Vehicle;
 import com.zhangjgux.easygarage.service.ParkingService;
 import com.zhangjgux.easygarage.service.PlaceService;
 import com.zhangjgux.easygarage.service.UserService;
@@ -80,31 +79,34 @@ public class ReservationRepositoryImpl implements ReservationRepository {
         if (status == 1) {
             Reservation r = new Reservation();
             r.setId(0);
-            Parking p = new Parking();
-            p.setBegin(TimeUtils.timeToTimestamp((String) body.get("begin_time")));
-            p.setEnd(TimeUtils.timeToTimestamp((String) body.get("end_time")));
-            Place place = placeService.findByPosition((int) body.get("floor"), (int) body.get("number"));
-            place.setStatus(3);
-            Vehicle v = vehicleService.findByName((String) body.get("vehicle_name"));
-            p.setVehicleID(v);
-            p.setUserID(userService.getCurrent());
-            p.setPlaceID(place);
-            r.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-            p.setCost((p.getBegin().getTime() - r.getCreatedAt().getTime()) / 3600 +
-                    parkingUtils.getCost(p.getBegin(), p.getEnd(), place.getNormalPrice(), place.getLatePrice()));
-            entityManager.merge(p);
-            r.setParkingID(p);
+            Timestamp stamp = new Timestamp(System.currentTimeMillis());
+            r.setCreatedAt(stamp);
             r.setUserID(userService.getCurrent());
             r.setStatus(1);
             entityManager.merge(r);
-            p.setReservationID(r);
+
+            Place place = placeService.findByPosition((int) body.get("floor"), (int) body.get("number"));
+            place.setStatus(3);
+            entityManager.merge(place);
+
+            Parking p = new Parking();
+            p.setId(0);
+            p.setBegin(TimeUtils.timeToTimestamp((String) body.get("begin_time")));
+            p.setEnd(TimeUtils.timeToTimestamp((String) body.get("end_time")));
+            p.setVehicleID(vehicleService.findByName((String) body.get("vehicle_name")));
+            p.setUserID(userService.getCurrent());
+            p.setPlaceID(placeService.findByPosition((int) body.get("floor"), (int) body.get("number")));
+            p.setCost((p.getBegin().getTime() - r.getCreatedAt().getTime()) / 3600 +
+                    parkingUtils.getCost(p.getBegin(), p.getEnd(), place.getNormalPrice(), place.getLatePrice()));
+            p.setReservationID(findByTime(stamp));
             entityManager.merge(p);
         } else if (status == 0) {
             Reservation r = findById((int) body.get("id"));
             r.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-            Parking p = r.getParkingID();
-            p.setEnd(r.getUpdatedAt());
-            p.getPlaceID().setStatus(1);
+            Parking p = parkingService.findReservationById(r.getId());
+            Place place = p.getPlaceID();
+            place.setStatus(1);
+            entityManager.merge(place);
             r.setStatus(0);
             entityManager.merge(r);
             entityManager.merge(p);

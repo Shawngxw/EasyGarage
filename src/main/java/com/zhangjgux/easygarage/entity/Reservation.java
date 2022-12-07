@@ -2,7 +2,6 @@ package com.zhangjgux.easygarage.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Table(name = "reservation")
@@ -21,10 +20,6 @@ public class Reservation {
 
     @Column(name = "updated_at")
     private Timestamp updatedAt;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parking_id")
-    private Parking parkingID;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
@@ -71,14 +66,6 @@ public class Reservation {
         this.updatedAt = updatedAt;
     }
 
-    public Parking getParkingID() {
-        return parkingID;
-    }
-
-    public void setParkingID(Parking parkingID) {
-        this.parkingID = parkingID;
-    }
-
     public User getUserID() {
         return userID;
     }
@@ -93,7 +80,6 @@ public class Reservation {
                 "status=" + status +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", parkingID=" + parkingID +
                 ", userID=" + userID +
                 '}';
     }

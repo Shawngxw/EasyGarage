@@ -65,6 +65,7 @@ public class CommentRepositoryImpl implements CommentRepository{
         Comment c;
         if (body.containsKey("create")) {
             c = new Comment();
+            c.setText(text);
             c.setId(0);
             c.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             c.setParkingID(parkingService.findById((int) body.get("parking_id")));

@@ -26,7 +26,7 @@ public class CommentController {
         return commentService.findAll();
     }
 
-    @GetMapping("/id/{id")
+    @GetMapping("/id/{id}")
     public Comment findById(@PathVariable int id) {
         return commentService.findById(id);
     }

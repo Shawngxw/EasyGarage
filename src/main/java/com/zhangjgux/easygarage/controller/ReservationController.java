@@ -44,7 +44,7 @@ public class ReservationController {
         return reservations.get(reservations.size() - 1);
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public Reservation updateReservation(@RequestBody Map<String, Object> body) {
         reservationService.save(body);
         return reservationService.findById((int) body.get("id"));

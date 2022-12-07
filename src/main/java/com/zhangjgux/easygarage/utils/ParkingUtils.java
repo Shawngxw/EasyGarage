@@ -12,6 +12,6 @@ public class ParkingUtils {
         if (diff / 3600 <= 5) {
             return diff / 3600 * normalPrice;
         }
-        return (diff - 5 * 3600) * latePrice + 5 * 3600 * normalPrice;
+        return (diff - 5 * 3600) * latePrice + 5 * normalPrice;
     }
 }

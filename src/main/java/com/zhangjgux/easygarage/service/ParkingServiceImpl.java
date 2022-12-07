@@ -39,6 +39,11 @@ public class ParkingServiceImpl implements ParkingService {
     }
 
     @Override
+    public Parking findReservationById(int id) {
+        return parkingRepository.findReservationById(id);
+    }
+
+    @Override
     @Transactional
     public void save(Map<String, Object> body) {
         parkingRepository.save(body);
