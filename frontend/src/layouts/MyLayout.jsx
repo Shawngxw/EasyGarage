@@ -7,10 +7,13 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {search} from "../store/searchSlice";
 import styles from "./layout.module.less"
+import {logOut} from "../store/authSlice";
 
 const Popup = () => {
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 	const handleLogout = () => {
+		dispatch(logOut())
 		navigate("/login")
 	}
 	const handleProfile = () => {
