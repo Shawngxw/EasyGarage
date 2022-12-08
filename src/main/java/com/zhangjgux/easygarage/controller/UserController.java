@@ -41,7 +41,9 @@ public class UserController {
     public User updateUser(@RequestBody Map<String, Object> body) {
         User theUser = userService.getUserByEmail((String) body.get("original_email"));
         if (theUser == null || (userService.getUserByEmail((String) body.get("new_email")) != null
-                && !((String) body.get("new_email")).equals((String) body.get("original_email")))) return null;
+                && !((String) body.get("new_email")).equals((String) body.get("original_email")))) {
+            throw new RuntimeException("Repeated Email!");
+        }
         theUser.setEmail((String) body.get("new_email"));
         theUser.setName((String) body.get("name"));
         theUser.setPassword(new BCryptPasswordEncoder().encode((String) body.get("password")));

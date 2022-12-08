@@ -36,12 +36,16 @@ public class VehicleController {
         Vehicle res = vehicleService.findByName(name);
         if (res == null) throw new RuntimeException("Vehicle not found");
         return res;
-
     }
 
     @GetMapping("/type/{type}")
     public List<Vehicle> findVehicleByType(@PathVariable int type) {
         return vehicleService.findByType(type);
+    }
+
+    @GetMapping("/place/{id}")
+    public Vehicle findVehicleByPlace(@PathVariable int id) {
+        return vehicleService.findByPlaceId(id);
     }
 
     @PostMapping("/add")

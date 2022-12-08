@@ -101,16 +101,25 @@ public class ParkingRepositoryImpl implements ParkingRepository {
             p.setUserID(userService.getCurrent());
             Vehicle v = vehicleService.findByName((String) body.get("vehicle_name"));
             if (v == null) return;
+            v.setStatus(0);
+            entityManager.merge(v);
             p.setVehicleID(v);
             Place place = placeService.findByPosition((int) body.get("floor"), (int) body.get("number"));
             p.setPlaceID(place);
             entityManager.merge(p);
             place.setStatus(2);
+            place.setVehicleID(v);
             entityManager.merge(place);
         } else {
-            Parking p = findByTime(TimeUtils.timeToTimestamp((String) body.get("begin")));
+            Parking p = findById((int) body.get("id"));
             if (p == null) return;
-            p.getPlaceID().setStatus(1);
+            Place place = p.getPlaceID();
+            place.setStatus(1);
+            place.setVehicleID(null);
+            entityManager.merge(place);
+            Vehicle v = p.getVehicleID();
+            v.setStatus(1);
+            entityManager.merge(v);
             p.setStatus(2);
             p.setEnd(new Timestamp(System.currentTimeMillis()));
             p.setCost(parkingUtils.getCost(p.getBegin(), p.getEnd(),

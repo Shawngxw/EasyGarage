@@ -34,6 +34,10 @@ public class Place {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Parking> parkings;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicleID;
+
     public Place() {
     }
 
@@ -101,6 +105,14 @@ public class Place {
         this.parkings = parkings;
     }
 
+    public Vehicle getVehicleID() {
+        return vehicleID;
+    }
+
+    public void setVehicleID(Vehicle vehicleID) {
+        this.vehicleID = vehicleID;
+    }
+
     @Override
     public String toString() {
         return "Place{" +
@@ -109,6 +121,8 @@ public class Place {
                 ", number=" + number +
                 ", normalPrice=" + normalPrice +
                 ", latePrice=" + latePrice +
+                ", parkings=" + parkings +
+                ", vehicleID=" + vehicleID +
                 '}';
     }
 }

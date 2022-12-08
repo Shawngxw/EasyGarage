@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,18 @@ public class PlaceRepositoryImpl implements PlaceRepository {
         TypedQuery<Place> theQuery =
                 entityManager.createQuery("SELECT p FROM Place p", Place.class);
         return theQuery.getResultList();
+    }
+
+    @Override
+    public Map<Integer, List<Place>> findAllByFloor() {
+        Map<Integer, List<Place>> map = new HashMap<>();
+        for (int i = 1; i <= 3; i++) {
+            TypedQuery<Place> theQuery =
+                    entityManager.createQuery("SELECT p FROM Place p WHERE p.floor = :floor", Place.class);
+            theQuery.setParameter("floor", i);
+            map.put(i, theQuery.getResultList());
+        }
+        return map;
     }
 
     @Override

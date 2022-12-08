@@ -5,9 +5,12 @@ import com.zhangjgux.easygarage.entity.Place;
 import java.util.List;
 import java.util.Map;
 
+
 public interface PlaceRepository {
 
     public List<Place> findAll();
+
+    public Map<Integer, List<Place>> findAllByFloor();
 
     public Place findById(int id);
 

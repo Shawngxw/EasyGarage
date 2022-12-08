@@ -11,6 +11,7 @@ public interface VehicleService {
     public Vehicle findById(int id);
     public Vehicle findByName(String name);
     public List<Vehicle> findByType(int type);
+    public Vehicle findByPlaceId(int id);
     public void save(Map<String, Object> body);
 
     public void deleteByName(String name);
