@@ -4,7 +4,6 @@ import {selectCurrentUser} from "../../store/authSlice"
 
 const RequireAuth = () => {
     const user = useSelector(selectCurrentUser)
-    console.log(user)
     const location = useLocation()
     return (
         user
