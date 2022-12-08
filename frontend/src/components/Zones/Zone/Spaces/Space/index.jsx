@@ -154,11 +154,11 @@ function Space(props) {
                                     placeholder="Select a option and change input text above"
                                     allowClear
                                 >
-                                    {cars.filter(car => {
+                                    {cars ? cars.filter(car => {
                                         return car.status !== 1
                                     }).map(car => {
                                         return <Option value={car.name}>{car.name}</Option>
-                                    })}
+                                    }) : ""}
                                 </Select>
                             </Form.Item>
                             <Form.Item name="range-time-picker"
