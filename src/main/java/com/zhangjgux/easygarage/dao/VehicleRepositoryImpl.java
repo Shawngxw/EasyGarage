@@ -1,7 +1,9 @@
 package com.zhangjgux.easygarage.dao;
 
+import com.zhangjgux.easygarage.entity.Place;
 import com.zhangjgux.easygarage.entity.User;
 import com.zhangjgux.easygarage.entity.Vehicle;
+import com.zhangjgux.easygarage.service.PlaceService;
 import com.zhangjgux.easygarage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,11 +19,13 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
     private EntityManager entityManager;
     private UserService userService;
+    private PlaceService placeService;
 
     @Autowired
-    public VehicleRepositoryImpl(EntityManager entityManager, UserService userService) {
+    public VehicleRepositoryImpl(EntityManager entityManager, UserService userService, PlaceService placeService) {
         this.entityManager = entityManager;
         this.userService = userService;
+        this.placeService = placeService;
     }
 
     @Override
@@ -70,6 +74,13 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         theQuery.setParameter("user", me);
         theQuery.setParameter("type", type);
         return theQuery.getResultList();
+    }
+
+    @Override
+    public Vehicle findByPlaceId(int id) {
+        User me = userService.getCurrent();
+        Place place = placeService.findById(id);
+        return place.getVehicleID();
     }
 
     @Override

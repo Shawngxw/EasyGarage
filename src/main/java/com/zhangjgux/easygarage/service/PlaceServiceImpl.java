@@ -33,6 +33,12 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     @Transactional
+    public Map<Integer, List<Place>> findAllByFloor() {
+        return placeRepository.findAllByFloor();
+    }
+
+    @Override
+    @Transactional
     public Place findByPosition(int floor, int number) {
         return placeRepository.findByPosition(floor, number);
     }

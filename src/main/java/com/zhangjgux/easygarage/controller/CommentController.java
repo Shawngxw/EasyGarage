@@ -47,7 +47,7 @@ public class CommentController {
     @PutMapping("/update")
     public Comment update(@RequestBody  Map<String, Object> body) {
         commentService.save(body);
-        return commentService.findByTime(TimeUtils.timeToTimestamp((String) body.get("created_at")));
+        return commentService.findById((int) body.get("id"));
     }
 
     @DeleteMapping("/delete/id/{id}")

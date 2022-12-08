@@ -3,6 +3,7 @@ package com.zhangjgux.easygarage.dao;
 import com.zhangjgux.easygarage.entity.Parking;
 import com.zhangjgux.easygarage.entity.Place;
 import com.zhangjgux.easygarage.entity.Reservation;
+import com.zhangjgux.easygarage.entity.Vehicle;
 import com.zhangjgux.easygarage.service.ParkingService;
 import com.zhangjgux.easygarage.service.PlaceService;
 import com.zhangjgux.easygarage.service.UserService;
@@ -87,16 +88,21 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
             Place place = placeService.findByPosition((int) body.get("floor"), (int) body.get("number"));
             place.setStatus(3);
-            entityManager.merge(place);
 
             Parking p = new Parking();
             p.setId(0);
+            p.setStatus(3);
             p.setBegin(TimeUtils.timeToTimestamp((String) body.get("begin_time")));
             p.setEnd(TimeUtils.timeToTimestamp((String) body.get("end_time")));
-            p.setVehicleID(vehicleService.findByName((String) body.get("vehicle_name")));
+            Vehicle v = vehicleService.findByName((String) body.get("vehicle_name"));
+            v.setStatus(2);
+            entityManager.merge(v);
+            place.setVehicleID(v);
+            entityManager.merge(place);
+            p.setVehicleID(v);
             p.setUserID(userService.getCurrent());
             p.setPlaceID(placeService.findByPosition((int) body.get("floor"), (int) body.get("number")));
-            p.setCost((p.getBegin().getTime() - r.getCreatedAt().getTime()) / 3600 +
+            p.setCost((p.getBegin().getTime() - r.getCreatedAt().getTime()) / 3600000 +
                     parkingUtils.getCost(p.getBegin(), p.getEnd(), place.getNormalPrice(), place.getLatePrice()));
             p.setReservationID(findByTime(stamp));
             entityManager.merge(p);
@@ -104,9 +110,14 @@ public class ReservationRepositoryImpl implements ReservationRepository {
             Reservation r = findById((int) body.get("id"));
             r.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
             Parking p = parkingService.findReservationById(r.getId());
+            p.setStatus(2);
             Place place = p.getPlaceID();
             place.setStatus(1);
+            place.setVehicleID(null);
             entityManager.merge(place);
+            Vehicle v = p.getVehicleID();
+            v.setStatus(1);
+            entityManager.merge(v);
             r.setStatus(0);
             entityManager.merge(r);
             entityManager.merge(p);

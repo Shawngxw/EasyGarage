@@ -8,10 +8,10 @@ import java.sql.Timestamp;
 public class ParkingUtils {
 
     public double getCost(Timestamp begin, Timestamp end, double normalPrice, double latePrice) {
-        long diff = end.getTime() - begin.getTime();
-        if (diff / 3600 <= 5) {
-            return diff / 3600 * normalPrice;
+        long diff = (end.getTime() - begin.getTime()) / 3600000;
+        if (diff <= 5) {
+            return diff * normalPrice;
         }
-        return (diff - 5 * 3600) * latePrice + 5 * normalPrice;
+        return (diff - 5) * latePrice + 5 * normalPrice;
     }
 }

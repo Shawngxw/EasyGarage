@@ -48,7 +48,7 @@ public class ParkingController {
     @PutMapping("/update")
     public Parking update(@RequestBody Map<String, Object> body) {
         parkingService.save(body);
-        return parkingService.findByTime(TimeUtils.timeToTimestamp((String) body.get("begin")));
+        return parkingService.findById((int) body.get("id"));
     }
 
     @DeleteMapping("/delete/id/{id}")

@@ -71,7 +71,7 @@ public class CommentRepositoryImpl implements CommentRepository{
             c.setParkingID(parkingService.findById((int) body.get("parking_id")));
             c.setUserID(userService.getCurrent());
         } else {
-            c = findByTime(TimeUtils.timeToTimestamp((String) body.get("created_at")));
+            c = findById((int) body.get("id"));
             if (c == null) return;
             c.setText(text);
             c.setUpdatedAt(new Timestamp(System.currentTimeMillis()));

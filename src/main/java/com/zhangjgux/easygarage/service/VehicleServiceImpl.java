@@ -44,6 +44,11 @@ public class VehicleServiceImpl implements VehicleService{
     }
 
     @Override
+    public Vehicle findByPlaceId(int id) {
+        return vehicleRepository.findByPlaceId(id);
+    }
+
+    @Override
     @Transactional
     public void save(Map<String, Object> body) {
         vehicleRepository.save(body);

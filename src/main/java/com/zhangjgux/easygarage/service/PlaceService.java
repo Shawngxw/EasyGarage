@@ -11,6 +11,8 @@ public interface PlaceService {
 
     public Place findById(int id);
 
+    public Map<Integer, List<Place>> findAllByFloor();
+
     public Place findByPosition(int floor, int number);
 
     public List<Place> findAllFree();

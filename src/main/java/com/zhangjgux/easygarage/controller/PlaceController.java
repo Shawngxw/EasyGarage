@@ -29,6 +29,11 @@ public class PlaceController {
         return placeService.findById(id);
     }
 
+    @GetMapping("/floors")
+    public Map<Integer, List<Place>> findPlacesByFloor() {
+        return placeService.findAllByFloor();
+    }
+
     @PostMapping("/position")
     public Place findPlaceByPosition(@RequestBody Map<String, Object> body) {
         int floor = (int) body.get("floor");
