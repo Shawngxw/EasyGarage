@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,19 +52,23 @@ public class ReservationController {
     }
 
     @DeleteMapping("/delete/id/{id}")
-    public String deleteReservationById(@PathVariable int id) {
+    public Map<String, String> deleteReservationById(@PathVariable int id) {
         Reservation r = reservationService.findById(id);
-        if (r == null) return "Reservation Not Found!";
+        if (r == null) throw new RuntimeException("Reservation Not Found!");
         reservationService.deleteById(id);
-        return "Successfully Deleted!";
+        Map<String, String> res = new HashMap<>();
+        res.put("msg", "Successfully Deleted!");
+        return res;
     }
 
     @DeleteMapping("/delete/time/{time}")
-    public String deleteReservationByTime(@PathVariable String time) {
+    public Map<String, String> deleteReservationByTime(@PathVariable String time) {
         Timestamp createdAt = TimeUtils.timeToTimestamp(time);
         Reservation r = reservationService.findByTime(createdAt);
-        if (r == null) return "Reservation Not Found!";
+        if (r == null) throw new RuntimeException("Reservation Not Found!");
         reservationService.deleteByTime(createdAt);
-        return "Successfully Deleted!";
+        Map<String, String> res = new HashMap<>();
+        res.put("msg", "Successfully Deleted!");
+        return res;
     }
 }

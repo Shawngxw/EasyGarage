@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,10 +54,12 @@ public class UserController {
     }
 
     @DeleteMapping("users/{userID}")
-    public String deleteUser(@PathVariable int userID) {
+    public Map<String, String> deleteUser(@PathVariable int userID) {
         User user = userService.findById(userID);
         if (user == null) throw new RuntimeException("User not found");
         userService.deleteById(userID);
-        return "User has been deleted!";
+        Map<String, String> res = new HashMap<>();
+        res.put("msg", "Successfully Deleted!");
+        return res;
     }
 }

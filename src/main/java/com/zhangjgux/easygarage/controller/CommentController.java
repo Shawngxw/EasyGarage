@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,19 +52,23 @@ public class CommentController {
     }
 
     @DeleteMapping("/delete/id/{id}")
-    public String deleteById(@PathVariable int id) {
+    public Map<String, String> deleteById(@PathVariable int id) {
         Comment c = commentService.findById(id);
-        if (c == null) return "Comment Not Found!";
+        if (c == null) throw new RuntimeException("Comment Not Found!");
         commentService.deleteById(id);
-        return "Successfully Deleted!";
+        Map<String, String> res = new HashMap<>();
+        res.put("msg", "Successfully Deleted!");
+        return res;
     }
 
     @DeleteMapping("/delete/time/{time}")
-    public String deleteByTime(@PathVariable String time) {
+    public Map<String, String> deleteByTime(@PathVariable String time) {
         Timestamp createdAt = TimeUtils.timeToTimestamp(time);
         Comment c = commentService.findByTime(createdAt);
-        if (c == null) return "Comment Not Found!";
+        if (c == null) throw new RuntimeException("Comment Not Found!");
         commentService.deleteByTime(createdAt);
-        return "Successfully Deleted!";
+        Map<String, String> res = new HashMap<>();
+        res.put("msg", "Successfully Deleted!");
+        return res;
     }
 }
