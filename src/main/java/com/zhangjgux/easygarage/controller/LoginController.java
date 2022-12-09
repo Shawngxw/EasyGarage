@@ -52,7 +52,11 @@ public class LoginController {
         user.setEmail((String) body.get("email"));
         user.setName((String) body.get("name"));
         user.setPassword((String) body.get("password"));
-        user.setDescription((String) body.get("description"));
+        if (body.containsKey("description")) {
+            user.setDescription((String) body.get("description"));
+        } else {
+            user.setDescription("");
+        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
