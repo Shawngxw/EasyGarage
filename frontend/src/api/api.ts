@@ -5,7 +5,7 @@ import {setCredentials} from "../store/authSlice";
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: '/api',
+    baseUrl: 'http://ec2-3-92-225-56.compute-1.amazonaws.com:8088/api/',
     credentials: 'include',
     prepareHeaders: (headers, {getState}) => {
         // @ts-ignore
