@@ -5,6 +5,7 @@ import com.zhangjgux.easygarage.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,9 +66,20 @@ public class VehicleController {
     }
 
     @DeleteMapping("/name_delete/{name}")
-    public String deleteVehicleByName(@PathVariable String name) {
-        if (vehicleService.findByName(name) == null) return "No vehicle to delete";
+    public Map<String, String> deleteVehicleByName(@PathVariable String name) {
+        if (vehicleService.findByName(name) == null) throw new RuntimeException("No vehicle to delete");
         vehicleService.deleteByName(name);
-        return "Successfully deleted!";
+        Map<String, String> res = new HashMap<>();
+        res.put("msg", "Successfully Deleted!");
+        return res;
+    }
+
+    @DeleteMapping("/id_delete/{id}")
+    public Map<String, String> deleteVehicleById(@PathVariable int id) {
+        if (vehicleService.findById(id) == null) throw new RuntimeException("No vehicle to delete");
+        vehicleService.deleteById(id);
+        Map<String, String> res = new HashMap<>();
+        res.put("msg", "Successfully Deleted!");
+        return res;
     }
 }
