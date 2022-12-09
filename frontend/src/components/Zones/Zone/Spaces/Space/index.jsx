@@ -122,7 +122,7 @@ function Space(props) {
                                     allowClear
                                 >
                                     {cars.filter(car => {
-                                        return car.status !== 1
+                                        return car.status !== 0
                                     }).map(car => {
                                         return <Option value={car.name}>{car.name}</Option>
                                     })}
