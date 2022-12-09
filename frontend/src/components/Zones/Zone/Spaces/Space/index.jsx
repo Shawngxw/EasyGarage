@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Col, DatePicker, Descriptions, Form, Input, Modal, Select, Tooltip} from "antd";
 import styles from "./index.module.less"
 import {ZoneTypeCtx} from "../../../utils";
-import {useBeginParkMutation, useGetCurrentUserCarsQuery} from "../../../../../api/api";
+import {useBeginParkMutation, useGetCurrentUserCarsQuery, useMakeReserveMutation} from "../../../../../api/api";
 
 const {Option} = Select
 const {RangePicker} = DatePicker;
@@ -10,6 +10,7 @@ const {RangePicker} = DatePicker;
 function Space(props) {
     const {id, status, floor, number, normalPrice, latePrice} = props
     let {data: cars, isFetching, refetch} = useGetCurrentUserCarsQuery()
+    const [makeReserve] = useMakeReserveMutation()
     let space_style = styles.colNotPark
     switch (status) {
         case 1:
@@ -40,7 +41,13 @@ function Space(props) {
                         vehicle_name: values.ownCars
                     })
                 } else {
-                    console.log(values)
+                    const obj = {
+                        vehicle_name: values.ownCars,
+                        begin_time: values["range-time-picker"][0].format("yyyy-MM-DD HH:mm:ss.000"),
+                        end_time: values["range-time-picker"][1].format("yyyy-MM-DD HH:mm:ss.000"),
+                        floor, number, status
+                    }
+                    makeReserve(obj)
                 }
 
                 form.resetFields();

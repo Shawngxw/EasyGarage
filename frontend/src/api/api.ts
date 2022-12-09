@@ -69,7 +69,8 @@ export const api = createApi({
                 url: "/reservations/add",
                 method: "POST",
                 body: {status, floor, number, begin_time, end_time, vehicle_name}
-            })
+            }),
+            invalidatesTags: ['Places'],
         })
     })
 })
