@@ -4,7 +4,6 @@ import Space from "./Space";
 import styles from "./index.module.less"
 
 function Spaces({parking_spaces}) {
-	console.log(parking_spaces,"spaces")
 	return (
 		<Row
 			className={styles.row}

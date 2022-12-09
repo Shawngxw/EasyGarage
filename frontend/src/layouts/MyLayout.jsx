@@ -78,7 +78,7 @@ function MyLayout() {
         <Layout>
             <Header className={styles.header}>
                 <div className="left">
-                    <div className="logo">Parking Management</div>
+                    <div className="logo">Easy Garage</div>
                     <Menu
                         selectedKeys={selectedKeys}
                         theme={"dark"}

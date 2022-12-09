@@ -29,7 +29,7 @@ function Home(props) {
 					justifyContent: "center",
 					alignItems: "center"
 				}}
-			>Welcome to Parking Management
+			>Welcome to Easy Garage
 			</div>
 		</div>
 	);

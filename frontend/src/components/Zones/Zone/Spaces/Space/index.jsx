@@ -96,7 +96,6 @@ function Space(props) {
                                         // console.log(item[1], "item1")
                                         if (item[1] instanceof Object) {
                                             return Object.entries(item[1]).map(item2 => {
-                                                console.log(item2[1])
                                                 if (item2[0] === "userID") {
                                                     return <Descriptions.Item
                                                         label={"email"}

@@ -3,7 +3,6 @@ import Spaces from "./Spaces";
 import {List} from "antd";
 
 function Zone({floor, spaces}) {
-    console.log(spaces)
     return (
         <List.Item>
             <List.Item.Meta
