@@ -28,9 +28,11 @@ const columns = [
         render: (_, record) => {
             const {status} = record
             if (status === 0) {
-                return "Not Parked"
-            } else if (status === 1) {
                 return "Parked"
+            } else if (status === 1) {
+                return "Not Parked"
+            }else {
+                return "Reserved"
             }
         }
     }
