@@ -35,14 +35,16 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['Places', "User"],
+    tagTypes: ['Places', "User", "Cars"],
     endpoints: builder => ({
         getAllPlaces: builder.query({
             query: () => "/places/floors",
             providesTags: ['Places'],
         }),
         getCurrentUserCars: builder.query({
-            query: () => "/vehicles"
+            query: () => "/vehicles",
+            providesTags: ['Cars'],
+
         }),
         beginPark: builder.mutation({
             query: ({create, vehicle_name, floor, number}) => ({
@@ -71,6 +73,21 @@ export const api = createApi({
                 body: {status, floor, number, begin_time, end_time, vehicle_name}
             }),
             invalidatesTags: ['Places'],
+        }),
+        addCar: builder.mutation({
+            query: ({name, type, status}) => ({
+                url: "/vehicles/add",
+                method: "POST",
+                body: {name, type, status}
+            }),
+            invalidatesTags: ['Cars'],
+        }),
+        deleteCar: builder.mutation({
+            query: ({id}) => ({
+                url: `/vehicles/id_delete/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ['Cars'],
         })
     })
 })
@@ -79,7 +96,16 @@ export const api = createApi({
 // 使用方法：
 // const [modify,{isLoading,isFetching,error}] = useModifyMutation()
 // const {data, isFetching} = useGetQuery()
-export const {useGetAllPlacesQuery, useGetCurrentUserCarsQuery, useBeginParkMutation, useGetCurrentUserQuery, useEditCurrentUserMutation, useMakeReserveMutation} = api
+export const {
+    useGetAllPlacesQuery,
+    useGetCurrentUserCarsQuery,
+    useBeginParkMutation,
+    useGetCurrentUserQuery,
+    useEditCurrentUserMutation,
+    useMakeReserveMutation,
+    useAddCarMutation,
+    useDeleteCarMutation
+} = api
 
 // @ts-ignore
 // export const selectPostsQuery = createSelector(selectPosts,res=>res.data)
