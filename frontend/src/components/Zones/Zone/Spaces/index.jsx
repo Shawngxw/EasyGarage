@@ -4,6 +4,7 @@ import Space from "./Space";
 import styles from "./index.module.less"
 
 function Spaces({parking_spaces}) {
+	console.log(parking_spaces,"spaces")
 	return (
 		<Row
 			className={styles.row}
@@ -12,7 +13,7 @@ function Spaces({parking_spaces}) {
 			align={"middle"}
 		>
 			{parking_spaces.map(parking_space => {
-				return <Space key={parking_space.parking_space_id} {...parking_space}/>
+				return <Space key={parking_space.id} {...parking_space}/>
 			})}
 		</Row>
 	);

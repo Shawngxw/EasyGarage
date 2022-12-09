@@ -5,7 +5,7 @@ import {setCredentials} from "../store/authSlice";
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: '/api',
+    baseUrl: 'http://ec2-3-92-225-56.compute-1.amazonaws.com:8088/api/',
     credentials: 'include',
     prepareHeaders: (headers, {getState}) => {
         // @ts-ignore
@@ -21,22 +21,11 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
     let result = await baseQuery(args, api, extraOptions)
 
     // @ts-ignore
-    if (result?.error?.originalStatus === 403) {
+    if (result?.error?.status > 400) {
+        // @ts-ignore
+        console.log(result?.error?.status)
         // send refresh token to get new access token
-        const refreshResult = await baseQuery('/refresh', api, extraOptions)
-        if (refreshResult?.data) {
-            // @ts-ignore
-            const user = api.getState().auth.user
-            // store the new token
-            console.log(refreshResult.data)
-            // @ts-ignore
-            api.dispatch(setCredentials({...refreshResult.data, user}))
-            // retry the original query with new access token
-            result = await baseQuery(args, api, extraOptions)
-            // @ts-ignore
-        } else if ([401, 403].includes(refreshResult?.error?.originalStatus)) {
-            api.dispatch(setCredentials({user: null, token: null}))
-        }
+        // api.dispatch(setCredentials({email: null}))
     }
 
 
@@ -46,14 +35,50 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: baseQueryWithReauth,
-    endpoints: builder => ({})
+    tagTypes: ['Places', "User"],
+    endpoints: builder => ({
+        getAllPlaces: builder.query({
+            query: () => "/places/floors",
+            providesTags: ['Places'],
+        }),
+        getCurrentUserCars: builder.query({
+            query: () => "/vehicles"
+        }),
+        beginPark: builder.mutation({
+            query: ({create, vehicle_name, floor, number}) => ({
+                url: "parkings/add",
+                method: "POST",
+                body: {create, vehicle_name, floor, number},
+            }),
+            invalidatesTags: ['Places'],
+        }),
+        getCurrentUser: builder.query({
+            query: () => "/me",
+            providesTags: ['User'],
+        }),
+        editCurrentUser: builder.mutation({
+            query: ({original_email, new_email, name, password, description}) => ({
+                url: "/me",
+                method: "PUT",
+                body: {original_email, new_email, name, password, description}
+            }),
+            invalidatesTags: ['User'],
+        }),
+        makeReserve: builder.mutation({
+            query: ({status, floor, number, begin_time, end_time, vehicle_name}) => ({
+                url: "/reservations/add",
+                method: "POST",
+                body: {status, floor, number, begin_time, end_time, vehicle_name}
+            })
+        })
+    })
 })
 
 // Export the auto-generated hook for the endpoint
 // 使用方法：
 // const [modify,{isLoading,isFetching,error}] = useModifyMutation()
 // const {data, isFetching} = useGetQuery()
-export const {} = api
+export const {useGetAllPlacesQuery, useGetCurrentUserCarsQuery, useBeginParkMutation, useGetCurrentUserQuery, useEditCurrentUserMutation, useMakeReserveMutation} = api
 
 // @ts-ignore
 // export const selectPostsQuery = createSelector(selectPosts,res=>res.data)

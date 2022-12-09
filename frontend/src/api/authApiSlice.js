@@ -1,4 +1,4 @@
-import { api } from "./api";
+import {api} from "./api";
 
 export const authApiSlice = api.injectEndpoints({
     endpoints: builder => ({
@@ -6,8 +6,12 @@ export const authApiSlice = api.injectEndpoints({
             query: credentials => ({
                 url: '/login',
                 method: 'POST',
-                body: { ...credentials }
-            })
+                body: {...credentials}
+            }),
+            transformResponse: (response, meta, arg) => {
+                console.log(response)
+                return {data: response.data}
+            },
         }),
     })
 })

@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import RequireAuth from "./components/RequireAuth";
 import Reserve from "./pages/Reserve";
 import Home from "./pages/Home"
+import Profile from "./pages/Profile";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="*" element={<RequireAuth/>}>
                     <Route path="walkin" element={<Walkin/>}/>
                     <Route path="reserve" element={<Reserve/>}/>
+                    <Route path="user" element={<Profile/>}/>
                 </Route>
             </Route>
             <Route path="/" element={<Home/>}/>
