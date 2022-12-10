@@ -116,7 +116,7 @@ function Profile() {
                                                 display: "flex",
                                                 justifyContent: "flex-end",
                                                 paddingRight: 20
-                                            }}><Button type="primary" onClick={() => setIsAddModalOpen(true)}>添加</Button></div>
+                                            }}><Button type="primary" onClick={() => setIsAddModalOpen(true)}>Add a Vehicle</Button></div>
                                         }}
                                     />
                                 ) : "Loading..."}
